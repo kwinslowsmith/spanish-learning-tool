@@ -1,5 +1,6 @@
 'use client'
 
+// Spanish Learning Tool - Phase I Homepage
 import Link from 'next/link'
 
 const MOCK_ARTICLES = [
