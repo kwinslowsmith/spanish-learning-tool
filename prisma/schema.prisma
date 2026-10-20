@@ -1,0 +1,192 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+
+  // Filter preferences
+  filtersRegion      String?
+  filtersContentType String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  glossary            UserGlossary[]
+  writingSubmissions  WritingSubmission[]
+  highlights          Highlight[]
+  notebookEntries     NotebookEntry[]
+  promptRatings       PromptRating[]
+}
+
+model Article {
+  id            String   @id @default(cuid())
+  source        String   // BBC Mundo, El País, Infobae, etc.
+  title         String
+  contentEs     String   @db.Text
+  contentEn     String?  @db.Text // English translation
+  region        String   // Colombia, Mexico, Ecuador, etc.
+  contentType   String   // Music, Food, Politics, etc.
+  difficultyLevel String  // basic, intermediate, advanced
+
+  publishedDate DateTime?
+  originalUrl   String?
+
+  createdAt     DateTime @default(now())
+
+  // Relations
+  writingPrompts WritingPrompt[]
+  comprehensionQuestions ComprehensionQuestion[]
+  glossaryEntries UserGlossary[]
+  writingSubmissions WritingSubmission[]
+  highlights Highlight[]
+  notebookEntries NotebookEntry[]
+}
+
+model WritingPrompt {
+  id              String   @id @default(cuid())
+  articleId       String
+  article         Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  promptText      String   @db.Text
+  aiModelUsed     String?
+  aiVersion       String?
+
+  createdAt       DateTime @default(now())
+
+  // Relations
+  submissions     WritingSubmission[]
+  ratings         PromptRating[]
+}
+
+model ComprehensionQuestion {
+  id            String   @id @default(cuid())
+  articleId     String
+  article       Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  questionText  String   @db.Text
+  answerOptions String?  @db.Text // JSON array if multiple choice
+  correctAnswer String?
+
+  aiModelUsed   String?
+  aiVersion     String?
+
+  createdAt     DateTime @default(now())
+
+  // Relations
+  ratings       PromptRating[]
+}
+
+model UserGlossary {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleId       String
+  article         Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  word            String
+  definition      String   @db.Text
+  partOfSpeech    String?
+  contextSentence String?  @db.Text
+
+  dateAdded       DateTime @default(now())
+  lastReviewed    DateTime?
+  reviewCount     Int      @default(0)
+  difficultyFlag  String?  // easy, medium, hard
+
+  @@unique([userId, word, articleId])
+}
+
+model WritingSubmission {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleId     String
+  article       Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  promptId      String
+  prompt        WritingPrompt @relation(fields: [promptId], references: [id], onDelete: Cascade)
+
+  submissionText String @db.Text
+
+  submittedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Highlight {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleId       String
+  article         Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  textHighlighted String @db.Text
+  startPosition   Int
+  endPosition     Int
+  contextSentence String? @db.Text
+
+  notebookEntryId String?
+  notebookEntry   NotebookEntry? @relation(fields: [notebookEntryId], references: [id], onDelete: SetNull)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model NotebookEntry {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title           String
+  content         String   @db.Text
+
+  relatedHighlights Highlight[]
+
+  relatedArticleIds String? // JSON array of article IDs
+  tags            String?  // JSON array
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  relatedArticles Article[]
+}
+
+model AiGenerationLog {
+  id            String   @id @default(cuid())
+
+  promptId      String?
+  questionId    String?
+
+  aiModel       String
+  aiVersion     String?
+  generatedAt   DateTime @default(now())
+}
+
+model PromptRating {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  promptId      String?
+  prompt        WritingPrompt? @relation(fields: [promptId], references: [id], onDelete: SetNull)
+
+  questionId    String?
+  question      ComprehensionQuestion? @relation(fields: [questionId], references: [id], onDelete: SetNull)
+
+  qualityRating Int      // 1-5
+  feedbackText  String?  @db.Text
+
+  createdAt     DateTime @default(now())
+}
