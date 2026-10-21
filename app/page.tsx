@@ -39,13 +39,13 @@ const CONTENT_TYPES = ['Music', 'Food', 'Literature', 'History', 'Politics']
 
 export default function Home() {
   return (
-    <div className="newspaper-section min-h-screen">
+    <div className="min-h-screen" style={{ background: '#faf8f3' }}>
       <div className="max-w-4xl mx-auto px-8 py-12 space-y-12">
         {/* Filters */}
         <div className="space-y-6">
           <div className="space-y-2">
-            <label className="block text-xs uppercase tracking-widest" style={{ color: 'var(--news-teal)' }}>Filter by region</label>
-            <select className="w-full px-4 py-3 border" style={{ borderColor: 'var(--news-border)', background: 'white', color: 'var(--news-text)' }}>
+            <label className="block text-xs uppercase tracking-widest" style={{ color: '#0d5f5f' }}>Filter by region</label>
+            <select className="w-full px-4 py-3 border" style={{ borderColor: '#e8e4dc', background: 'white', color: '#1c1917' }}>
               <option>All Regions</option>
               {REGIONS.map(region => (
                 <option key={region} value={region}>{region}</option>
@@ -53,8 +53,8 @@ export default function Home() {
             </select>
           </div>
           <div className="space-y-2">
-            <label className="block text-xs uppercase tracking-widest" style={{ color: 'var(--news-teal)' }}>Filter by type</label>
-            <select className="w-full px-4 py-3 border" style={{ borderColor: 'var(--news-border)', background: 'white', color: 'var(--news-text)' }}>
+            <label className="block text-xs uppercase tracking-widest" style={{ color: '#0d5f5f' }}>Filter by type</label>
+            <select className="w-full px-4 py-3 border" style={{ borderColor: '#e8e4dc', background: 'white', color: '#1c1917' }}>
               <option>All Types</option>
               {CONTENT_TYPES.map(type => (
                 <option key={type} value={type}>{type}</option>
@@ -67,14 +67,14 @@ export default function Home() {
         <div className="space-y-10">
           {MOCK_ARTICLES.map((article, idx) => (
             <Link key={article.id} href={`/articles/${article.id}`}>
-              <article className="space-y-3 pb-8 border-b" style={{ borderColor: 'var(--news-border)' }}>
+              <article className="space-y-3 pb-8 border-b" style={{ borderColor: '#e8e4dc' }}>
                 <div className="space-y-2">
-                  <div className="flex gap-3 text-xs uppercase tracking-wider" style={{ color: 'var(--news-teal)' }}>
+                  <div className="flex gap-3 text-xs uppercase tracking-wider" style={{ color: '#0d5f5f' }}>
                     <span>{article.source}</span>
                     <span>•</span>
                     <span>{article.region}</span>
                   </div>
-                  <h2 className="serif-headline text-4xl leading-tight" style={{ color: 'var(--news-text)' }}>
+                  <h2 className="serif-headline text-4xl leading-tight" style={{ color: '#1c1917', fontFamily: "'Garamond', 'Georgia', serif" }}>
                     {article.title}
                   </h2>
                 </div>
@@ -82,10 +82,10 @@ export default function Home() {
                   {article.excerpt}
                 </p>
                 <div className="flex gap-4 items-center pt-2">
-                  <span className="text-xs" style={{ color: 'var(--news-teal)' }}>
+                  <span className="text-xs" style={{ color: '#0d5f5f' }}>
                     {new Date(article.publishedDate).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </span>
-                  <span className="text-xs font-medium px-3 py-1" style={{ background: 'var(--news-teal)', color: 'white', letterSpacing: '0.5px' }}>
+                  <span className="text-xs font-medium px-3 py-1" style={{ background: '#0d5f5f', color: 'white', letterSpacing: '0.5px' }}>
                     {article.difficulty.toUpperCase()}
                   </span>
                 </div>

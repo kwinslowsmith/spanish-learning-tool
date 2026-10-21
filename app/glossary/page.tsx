@@ -20,20 +20,20 @@ export default function GlossaryPage() {
   )
 
   return (
-    <div className="library-section min-h-screen" style={{ background: 'linear-gradient(135deg, #faf8f3 0%, #f5f1eb 100%)' }}>
+    <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #faf8f3 0%, #f5f1eb 100%)' }}>
       <div className="max-w-4xl mx-auto px-8 py-12 space-y-12">
         {/* Header */}
         <div className="space-y-2">
-          <h1 className="serif-headline text-4xl" style={{ color: 'var(--lib-burgundy)' }}>My Glossary</h1>
-          <p className="text-lg" style={{ color: 'var(--lib-teal)' }}>{MOCK_GLOSSARY.length} words collected</p>
+          <h1 className="text-4xl font-bold" style={{ color: '#8b3a3a', fontFamily: "'Garamond', 'Georgia', serif" }}>My Glossary</h1>
+          <p className="text-lg" style={{ color: '#0d5f5f' }}>{MOCK_GLOSSARY.length} words collected</p>
         </div>
 
         {/* Review Modes */}
         <div className="grid grid-cols-3 gap-4">
           {[
-            { mode: 'list' as const, label: '📋 List', color: 'var(--lib-teal)' },
-            { mode: 'flashcard' as const, label: '🎴 Flashcard', color: 'var(--lib-burgundy)' },
-            { mode: 'contextual' as const, label: '📖 Contextual', color: 'var(--lib-gold)' },
+            { mode: 'list' as const, label: '📋 List', color: '#0d5f5f' },
+            { mode: 'flashcard' as const, label: '🎴 Flashcard', color: '#8b3a3a' },
+            { mode: 'contextual' as const, label: '📖 Contextual', color: '#d4a574' },
           ].map(({ mode, label, color }) => (
             <button
               key={mode}
@@ -58,18 +58,18 @@ export default function GlossaryPage() {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-5 py-3 border-2 text-lg"
-              style={{ borderColor: 'var(--lib-gold)', background: 'white', color: 'var(--lib-dark)' }}
+              style={{ borderColor: '#d4a574', background: 'white', color: '#1c1917' }}
             />
             <div className="space-y-5">
               {filteredGlossary.map((entry, i) => (
                 <div
                   key={i}
                   className="p-6 rounded"
-                  style={{ background: 'white', borderLeft: `4px solid var(--lib-gold)`, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+                  style={{ background: 'white', borderLeft: `4px solid #d4a574`, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
                 >
-                  <h3 className="serif-headline text-2xl mb-2" style={{ color: 'var(--lib-burgundy)' }}>{entry.word}</h3>
-                  <p className="text-lg leading-relaxed mb-3" style={{ color: 'var(--lib-dark)' }}>{entry.definition}</p>
-                  <p className="text-xs uppercase tracking-widest" style={{ color: 'var(--lib-teal)' }}>Article {entry.articleId}</p>
+                  <h3 className="text-2xl font-bold mb-2" style={{ color: '#8b3a3a', fontFamily: "'Garamond', 'Georgia', serif" }}>{entry.word}</h3>
+                  <p className="text-lg leading-relaxed mb-3" style={{ color: '#1c1917' }}>{entry.definition}</p>
+                  <p className="text-xs uppercase tracking-widest" style={{ color: '#0d5f5f' }}>Article {entry.articleId}</p>
                 </div>
               ))}
             </div>
