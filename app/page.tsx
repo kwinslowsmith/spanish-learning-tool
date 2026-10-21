@@ -1,4 +1,4 @@
-// Spanish Learning Tool - Phase I Homepage
+// Spanish Learning Tool - Newspaper Section
 import Link from 'next/link'
 
 const MOCK_ARTICLES = [
@@ -39,23 +39,22 @@ const CONTENT_TYPES = ['Music', 'Food', 'Literature', 'History', 'Politics']
 
 export default function Home() {
   return (
-    <div className="space-y-8">
-      {/* Filters */}
-      <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm">
-        <h2 className="text-lg font-semibold text-stone-900 mb-4">Filters</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">Region</label>
-            <select className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+    <div className="newspaper-section min-h-screen">
+      <div className="max-w-4xl mx-auto px-8 py-12 space-y-12">
+        {/* Filters */}
+        <div className="space-y-6">
+          <div className="space-y-2">
+            <label className="block text-xs uppercase tracking-widest" style={{ color: 'var(--news-teal)' }}>Filter by region</label>
+            <select className="w-full px-4 py-3 border" style={{ borderColor: 'var(--news-border)', background: 'white', color: 'var(--news-text)' }}>
               <option>All Regions</option>
               {REGIONS.map(region => (
                 <option key={region} value={region}>{region}</option>
               ))}
             </select>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-stone-700 mb-2">Content Type</label>
-            <select className="w-full px-4 py-2 border border-stone-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent">
+          <div className="space-y-2">
+            <label className="block text-xs uppercase tracking-widest" style={{ color: 'var(--news-teal)' }}>Filter by type</label>
+            <select className="w-full px-4 py-3 border" style={{ borderColor: 'var(--news-border)', background: 'white', color: 'var(--news-text)' }}>
               <option>All Types</option>
               {CONTENT_TYPES.map(type => (
                 <option key={type} value={type}>{type}</option>
@@ -63,34 +62,37 @@ export default function Home() {
             </select>
           </div>
         </div>
-      </div>
 
-      {/* Articles */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-stone-900">Latest Articles</h2>
-        {MOCK_ARTICLES.map(article => (
-          <Link key={article.id} href={`/articles/${article.id}`}>
-            <div className="bg-white p-6 rounded-lg border border-stone-200 shadow-sm hover:shadow-md transition cursor-pointer">
-              <div className="flex items-start justify-between mb-3">
-                <h3 className="text-xl font-semibold text-stone-900">{article.title}</h3>
-                <span className={`text-xs font-semibold px-3 py-1 rounded-full whitespace-nowrap ml-4 ${
-                  article.difficulty === 'basic' ? 'bg-green-100 text-green-700' :
-                  article.difficulty === 'intermediate' ? 'bg-blue-100 text-blue-700' :
-                  'bg-purple-100 text-purple-700'
-                }`}>
-                  {article.difficulty}
-                </span>
-              </div>
-              <p className="text-stone-600 mb-4">{article.excerpt}</p>
-              <div className="flex gap-3 text-xs text-stone-500">
-                <span>📰 {article.source}</span>
-                <span>📍 {article.region}</span>
-                <span>🏷️ {article.contentType}</span>
-                <span>📅 {new Date(article.publishedDate).toLocaleDateString()}</span>
-              </div>
-            </div>
-          </Link>
-        ))}
+        {/* Articles */}
+        <div className="space-y-10">
+          {MOCK_ARTICLES.map((article, idx) => (
+            <Link key={article.id} href={`/articles/${article.id}`}>
+              <article className="space-y-3 pb-8 border-b" style={{ borderColor: 'var(--news-border)' }}>
+                <div className="space-y-2">
+                  <div className="flex gap-3 text-xs uppercase tracking-wider" style={{ color: 'var(--news-teal)' }}>
+                    <span>{article.source}</span>
+                    <span>•</span>
+                    <span>{article.region}</span>
+                  </div>
+                  <h2 className="serif-headline text-4xl leading-tight" style={{ color: 'var(--news-text)' }}>
+                    {article.title}
+                  </h2>
+                </div>
+                <p className="text-lg leading-relaxed" style={{ color: '#5a5550' }}>
+                  {article.excerpt}
+                </p>
+                <div className="flex gap-4 items-center pt-2">
+                  <span className="text-xs" style={{ color: 'var(--news-teal)' }}>
+                    {new Date(article.publishedDate).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </span>
+                  <span className="text-xs font-medium px-3 py-1" style={{ background: 'var(--news-teal)', color: 'white', letterSpacing: '0.5px' }}>
+                    {article.difficulty.toUpperCase()}
+                  </span>
+                </div>
+              </article>
+            </Link>
+          ))}
+        </div>
       </div>
     </div>
   )

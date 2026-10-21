@@ -1,26 +1,53 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Garamond:wght@400;600;700&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Newspaper section colors */
+  --news-bg: #faf8f3;
+  --news-text: #1c1917;
+  --news-teal: #0d5f5f;
+  --news-accent: #d64545;
+  --news-border: #e8e4dc;
+
+  /* Library section colors */
+  --lib-bg: #faf8f3;
+  --lib-dark: #1c1917;
+  --lib-teal: #0d5f5f;
+  --lib-burgundy: #8b3a3a;
+  --lib-gold: #d4a574;
+  --lib-navy: #2c3e50;
+  --lib-cream: #f5f1eb;
+  --lib-accent: #c97f5f;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--news-bg);
+  color: var(--news-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Garamond', 'Georgia', serif;
+  font-weight: 600;
+}
+
+/* Utility classes */
+.serif-headline {
+  font-family: 'Garamond', 'Georgia', serif;
+  font-weight: 600;
+}
+
+.newspaper-section {
+  background: var(--news-bg);
+  color: var(--news-text);
+}
+
+.library-section {
+  background: var(--lib-bg);
+  color: var(--lib-dark);
 }

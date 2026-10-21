@@ -23,19 +23,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="es"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-stone-50">
-        <nav className="border-b border-stone-200 bg-white sticky top-0 z-50">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-teal-700">📚 Spanish Learning</h1>
-            <div className="flex gap-6 text-sm font-medium text-stone-600">
-              <a href="/" className="hover:text-teal-700 transition">Articles</a>
-              <a href="/glossary" className="hover:text-teal-700 transition">Glossary</a>
-              <a href="/notebook" className="hover:text-teal-700 transition">Notebook</a>
-              <a href="/writing" className="hover:text-teal-700 transition">My Writing</a>
+      <body className="min-h-full flex flex-col bg-white">
+        <nav className="border-b" style={{ borderColor: 'var(--news-border)', background: 'var(--news-bg)' }} className="sticky top-0 z-50">
+          <div className="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
+            <h1 className="serif-headline text-3xl" style={{ color: 'var(--news-teal)' }}>
+              Spanish Learning
+            </h1>
+            <div className="flex gap-8 text-sm font-medium">
+              <a href="/" className="transition" style={{ color: 'var(--news-text)' }} onMouseEnter={(e) => e.target.style.color = 'var(--news-teal)'} onMouseLeave={(e) => e.target.style.color = 'var(--news-text)'}>
+                Articles
+              </a>
+              <a href="/glossary" className="transition" style={{ color: 'var(--news-text)' }} onMouseEnter={(e) => e.target.style.color = 'var(--lib-burgundy)'} onMouseLeave={(e) => e.target.style.color = 'var(--news-text)'}>
+                Glossary
+              </a>
+              <a href="/notebook" className="transition" style={{ color: 'var(--news-text)' }} onMouseEnter={(e) => e.target.style.color = 'var(--lib-burgundy)'} onMouseLeave={(e) => e.target.style.color = 'var(--news-text)'}>
+                Notebook
+              </a>
+              <a href="/writing" className="transition" style={{ color: 'var(--news-text)' }} onMouseEnter={(e) => e.target.style.color = 'var(--lib-burgundy)'} onMouseLeave={(e) => e.target.style.color = 'var(--news-text)'}>
+                My Writing
+              </a>
             </div>
           </div>
         </nav>
-        <main className="max-w-6xl mx-auto w-full px-4 py-8">
+        <main className="flex-1 w-full">
           {children}
         </main>
       </body>
